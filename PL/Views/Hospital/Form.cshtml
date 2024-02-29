@@ -1,0 +1,48 @@
+﻿@model ML.Hospital
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario de Hospital</h1>
+<div class="container">
+    @using (Html.BeginForm("Form", "Hospital", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdHospital)
+        <div class="row pb-md-3">
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Nombre, new {@class="form-control", @placeholder="Nombre del Hospital"})
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Direccion, new {@class="form-control", @placeholder="Dirección del Hospital"})
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AnioConstruccion, new {@class="form-control", @placeholder="Año de Construcción"})
+            </div>
+        </div>
+        <div class="row pb-md-3">
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Capacidad, new {@class="form-control", @placeholder="Capacidad de Pacientes"})
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.Especialidad.IdEspecialidad, new SelectList(Model.Especialidad.Especialidades, "IdEspecialidad", "Nombre"), "Selecciona una especialidad", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row pb-md-3">
+            @if (Model.IdHospital == 0)
+            {
+                <button class="btn btn-outline-success col-md-6 rounded-pill" type="submit">
+                    Agregar
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-outline-primary col-md-6" type="submit">
+                    Actualizar
+                </button>
+            }
+            <a class="btn btn-outline-warning col-md-6 rounded-pill" href="@Url.Action("GetAll", "Hospital")">Cancelar</a>
+        </div>
+    }
+</div>
+

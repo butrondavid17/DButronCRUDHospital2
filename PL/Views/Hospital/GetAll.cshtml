@@ -1,0 +1,52 @@
+﻿@model ML.Hospital
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model != null)
+{
+    <div class="flex-column">
+        <h1 class="text-center">Listado de Hospitales</h1>
+        <a class="btn btn-outline-success rounded-pill float-end" href="@Url.Action("Form", "Hospital")">Agregar</a>
+    </div>
+    <div class="container">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center"># Hospital</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Dirección</th>
+                    <th scope="col" class="text-center">Año de Construcción</th>
+                    <th scope="col" class="text-center">Capacidad</th>
+                    <th scope="col" class="text-center">Especialidad</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.Hospital hospital in Model.Hospitales)
+                {
+                    <tr>
+                        <td class="text-center">@hospital.IdHospital</td>
+                        <td class="text-center">@hospital.Nombre</td>
+                        <td class="text-center">@hospital.Direccion</td>
+                        <td class="text-center">@hospital.AnioConstruccion.ToString("yyyy")</td>
+                        <td class="text-center">@hospital.Capacidad</td>
+                        <td class="text-center">@hospital.Especialidad.Nombre</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-warning rounded-pill" href="@Url.Action("Form", "Hospital", new {IdHospital = hospital.IdHospital})">Editar</a> |
+                            <a class="btn btn-outline-danger rounded-pill" href="@Url.Action("Delete", "Hospital", new {IdHospital = hospital.IdHospital})">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Ocurrio un error al cargar la información
+    </div>
+}
+
+
